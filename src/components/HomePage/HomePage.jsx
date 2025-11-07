@@ -7,15 +7,21 @@ const HomePage = ({
   mainBackgroundURL,
   subBackgroundURL,
   foodURL,
+  backgroundColor = "#FFFFFF",
+  textColor = "#000",
   name = "MUTTON STEAK",
-  description = "This is our mutton steak animation. This is our mutton steak animation."
+  description = "This is our mutton steak animation. This is our mutton steak animation.",
 }) => {
 
   // Cấu hình chung cho hiệu ứng chuyển cảnh mượt mà
   const transitionSpec = { duration: 0.5, ease: "easeInOut" };
 
   return (
-    <div className="relative w-screen h-screen bg-green-100 overflow-hidden">
+    <motion.div
+      className="relative w-screen h-screen overflow-hidden"
+      animate={{ backgroundColor }} // Animate màu nền mỗi khi prop đổi
+      transition={{ duration: 0.6, ease: "easeInOut" }} // 0.3s mượt
+    >
 
       {/* --- 1. ẢNH NỀN CHÍNH (Góc trên trái) --- */}
       <AnimatePresence>
@@ -43,7 +49,7 @@ const HomePage = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ ...transitionSpec, delay: 0.1 }}
+          transition={{ ...transitionSpec }}
         />
       </AnimatePresence>
 
@@ -53,38 +59,33 @@ const HomePage = ({
           key={foodURL}
           src={foodURL}
           alt="Food"
-          className="absolute bottom-[5%] right-[20%] h-[500px] object-contain z-20"
+          className="absolute bottom-[5%] right-[25%] h-[500px] object-contain z-20"
           // HIỆU ỨNG MỚI: Di chuyển cong và xoay 90 độ
           // 1. Initial: Bắt đầu từ trên cao, lệch sang một bên, xoay -90 độ và vô hình
           initial={{
             opacity: 0,
             y: -200,    // Bắt đầu từ trên cao
-            x: 100,     // Hơi lệch sang phải một chút để tạo đường cong
-            rotate: -90 // Xoay ngược chiều kim đồng hồ 90 độ
+            x: 200,     // Hơi lệch sang phải một chút để tạo đường cong
           }}
           // 2. Animate: Rơi xuống vị trí chuẩn, về giữa, xoay 0 độ và hiện rõ
           animate={{
             opacity: 1,
             y: 0,
             x: 0,
-            rotate: 0
           }}
           // 3. Exit: Di chuyển xuống dưới, lệch sang bên kia, xoay 90 độ và mờ dần
           exit={{
             opacity: 0,
             y: 200,     // Rơi xuống dưới
             x: -100,    // Lệch sang trái để tạo đường cong thoát
-            rotate: 90  // Xoay thuận chiều kim đồng hồ 90 độ
           }}
           // Cấu hình chuyển động:
           // type: 'spring' vẫn là lựa chọn tốt cho cảm giác rơi tự nhiên
           // Các giá trị stiffness, damping có thể điều chỉnh để đạt hiệu ứng mong muốn
           transition={{
-            type: "spring",
-            stiffness: 200, // Độ cứng lò xo
-            damping: 20,    // Giảm xóc
-            mass: 1,        // Khối lượng
-            delay: 0.1      // Có thể thêm delay nhẹ để ảnh nền chuyển trước
+            type: "tween",       // đổi từ spring sang tween
+            duration: 0.4,       // tốc độ di chuyển
+            ease: "easeInOut",   // easing mượt
           }}
         />
       </AnimatePresence>
@@ -100,16 +101,22 @@ const HomePage = ({
             exit={{ opacity: 0, y: -20 }}   // Trượt lên trên khi biến mất
             transition={{ duration: 0.3 }}
           >
-            <div className="text-[40px] font-extrabold text-black leading-none mb-6 uppercase">
-              {name}
-            </div>
-            <div className="text-gray-800 text-[12px] w-[400px] leading-relaxed">
-              {description}
-            </div>
+             <div
+                className="text-[40px] font-extrabold leading-none mb-6 uppercase"
+                style={{ color: textColor }}
+              >
+                {name}
+              </div>
+              <div
+                className="text-[12px] w-[400px] leading-relaxed"
+                style={{ color: textColor }}
+              >
+            {description}
+          </div>
           </motion.div>
         </AnimatePresence>
       </div>
-    </div>
+    </motion.div>
   )
 }
 
