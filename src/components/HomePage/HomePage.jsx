@@ -14,13 +14,13 @@ const HomePage = ({
 }) => {
 
   // Cấu hình chung cho hiệu ứng chuyển cảnh mượt mà
-  const transitionSpec = { duration: 0.5, ease: "easeInOut" };
+  const transitionSpec = { duration: 0.8, ease: "easeInOut" };
 
   return (
     <motion.div
       className="relative w-screen h-screen overflow-hidden"
       animate={{ backgroundColor }} // Animate màu nền mỗi khi prop đổi
-      transition={{ duration: 0.6, ease: "easeInOut" }} // 0.3s mượt
+      transition={{ duration: 0.3, ease: "easeInOut" }} // 0.3s mượt
     >
 
       {/* --- 1. ẢNH NỀN CHÍNH (Góc trên trái) --- */}
@@ -49,7 +49,7 @@ const HomePage = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ ...transitionSpec }}
+          transition={transitionSpec }
         />
       </AnimatePresence>
 
@@ -84,7 +84,7 @@ const HomePage = ({
           // Các giá trị stiffness, damping có thể điều chỉnh để đạt hiệu ứng mong muốn
           transition={{
             type: "tween",       // đổi từ spring sang tween
-            duration: 0.4,       // tốc độ di chuyển
+            duration: 0.3,       // tốc độ di chuyển
             ease: "easeInOut",   // easing mượt
           }}
         />
